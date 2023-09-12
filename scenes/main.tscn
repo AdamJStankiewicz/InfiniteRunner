@@ -1,0 +1,36 @@
+[gd_scene load_steps=9 format=3 uid="uid://cgd0qkgnstuy0"]
+
+[ext_resource type="Script" path="res://scenes/Level.gd" id="1_7eprk"]
+[ext_resource type="PackedScene" uid="uid://p71xwawyruxj" path="res://modules/module1.tscn" id="2_foovf"]
+[ext_resource type="PackedScene" uid="uid://3sve2nrss2io" path="res://modules/module2.tscn" id="3_54n4n"]
+[ext_resource type="PackedScene" uid="uid://d2q8y0rtu2njt" path="res://modules/module3.tscn" id="4_ii3k0"]
+[ext_resource type="PackedScene" uid="uid://c78ayj4g08730" path="res://modules/module4.tscn" id="5_6qkjt"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_pl37p"]
+
+[sub_resource type="Sky" id="Sky_aqf0r"]
+sky_material = SubResource("PhysicalSkyMaterial_pl37p")
+
+[sub_resource type="Environment" id="Environment_jgbfd"]
+background_mode = 2
+sky = SubResource("Sky_aqf0r")
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.03
+
+[node name="main" type="Node3D"]
+
+[node name="Level" type="Node3D" parent="."]
+script = ExtResource("1_7eprk")
+modules = Array[PackedScene]([ExtResource("2_foovf"), ExtResource("3_54n4n"), ExtResource("4_ii3k0"), ExtResource("5_6qkjt")])
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jgbfd")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.702692, -0.656933, 0.273243, -0.0493662, 0.338099, 0.939815, -0.709779, -0.67389, 0.205149, 0, 0, 0)
+light_energy = 3.0
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.11738e-08, 0.0415443, -0.999137, -1.46767e-08, 0.999137, 0.0415443, 1, 1.63746e-08, -4.05285e-08, -10, 9.678, 0)
+current = true
