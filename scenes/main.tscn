@@ -1,10 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://cgd0qkgnstuy0"]
+[gd_scene load_steps=14 format=3 uid="uid://cgd0qkgnstuy0"]
 
 [ext_resource type="Script" path="res://scenes/Level.gd" id="1_7eprk"]
 [ext_resource type="PackedScene" uid="uid://p71xwawyruxj" path="res://modules/module1.tscn" id="2_foovf"]
 [ext_resource type="PackedScene" uid="uid://3sve2nrss2io" path="res://modules/module2.tscn" id="3_54n4n"]
 [ext_resource type="PackedScene" uid="uid://d2q8y0rtu2njt" path="res://modules/module3.tscn" id="4_ii3k0"]
 [ext_resource type="PackedScene" uid="uid://c78ayj4g08730" path="res://modules/module4.tscn" id="5_6qkjt"]
+[ext_resource type="PackedScene" uid="uid://urka8ho68bnr" path="res://modules/module5.tscn" id="6_d4cja"]
+[ext_resource type="Script" path="res://scenes/Player.gd" id="7_obtw7"]
+[ext_resource type="Material" uid="uid://bijm7n2bbco7g" path="res://art/materials/green.tres" id="8_7irj6"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_pl37p"]
 
@@ -17,11 +20,15 @@ sky = SubResource("Sky_aqf0r")
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.03
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dwf3y"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ig8x8"]
+
 [node name="main" type="Node3D"]
 
 [node name="Level" type="Node3D" parent="."]
 script = ExtResource("1_7eprk")
-modules = Array[PackedScene]([ExtResource("2_foovf"), ExtResource("3_54n4n"), ExtResource("4_ii3k0"), ExtResource("5_6qkjt")])
+modules = Array[PackedScene]([ExtResource("6_d4cja"), ExtResource("2_foovf"), ExtResource("3_54n4n"), ExtResource("4_ii3k0"), ExtResource("5_6qkjt")])
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_jgbfd")
@@ -34,3 +41,17 @@ shadow_enabled = true
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.11738e-08, 0.0415443, -0.999137, -1.46767e-08, 0.999137, 0.0415443, 1, 1.63746e-08, -4.05285e-08, -10, 9.678, 0)
 current = true
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.98541, 1, 0)
+script = ExtResource("7_obtw7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+material_override = ExtResource("8_7irj6")
+mesh = SubResource("CapsuleMesh_dwf3y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_ig8x8")
+
+[node name="DeathSensor" type="RayCast3D" parent="Player"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
